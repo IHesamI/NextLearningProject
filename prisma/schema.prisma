@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model employee {
+  id          Int       @id @default(autoincrement())
+  phonenumber String    @db.VarChar(9)
+  username    String    @db.VarChar(20)
+  name        String?
+  projects    project[]
+}
+
+model freelancer {
+  id          Int       @id @default(autoincrement())
+  phonenumber String    @db.VarChar(9)
+  username    String    @db.VarChar(20)
+  name        String?
+  proposes    propose[]
+}
+
+model project {
+  id         Int       @id @default(autoincrement())
+  employee   employee  @relation(fields: [employeeid], references: [id])
+  employeeid Int
+  propose    propose[]
+  title      String    @db.VarChar(60)
+}
+
+model propose {
+  id           Int        @id @default(autoincrement())
+  freelancer   freelancer @relation(fields: [freelancerid], references: [id])
+  freelancerid Int
+  project      project    @relation(fields: [projecid], references: [id])
+  projecid     Int
+}
+
+// model chatmessages {
+//   id      Int      @id @default(autoincrement())
+//   created DateTime @default(now())
+//   content 
+// }
