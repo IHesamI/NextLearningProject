@@ -10,18 +10,33 @@ import { PrismaClient } from '.prisma/client';
 const inter = Inter({ subsets: ['latin'] })
 
 
+export interface prop {
+  projectid: number,
+  id: number,
+  seenstatus: boolean,
+  title: string,
+  freelancerid: number,
+}
+
 export interface Projectinf {
   id: number;
   title: string;
+  propose?: prop[]
 }
 
 
 export async function getServerSideProps() {
   const prisma = new PrismaClient();
-  const projects = await prisma.project.findMany();
+  const projects = await prisma.project.findMany(
+    {
+      include: {
+        propose: false
+      }
+    }
+  );
   return {
     // props: JSON.parse(JSON.stringify(projects))
-    props: {projects}
+    props: { projects }
   }
 
 }
@@ -32,7 +47,7 @@ export default function Home({ projects }: { projects: Projectinf[] }) {
     <Stack>
       <title>Home</title>
       <Projectlist data={projects} />
-      
+
     </Stack>
   )
 }

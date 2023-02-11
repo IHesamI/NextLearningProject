@@ -20,7 +20,7 @@ export default function CreateProject() {
                         title: title_value
                     })
                 }).then((response) => response.json())
-                    .then((message) => console.log(message))
+
 
             }
             fetcher();

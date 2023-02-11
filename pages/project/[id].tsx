@@ -44,7 +44,8 @@ export default function Project({ id, title }: project) {
                     }
                 )
             }).then(response => response.json())
-                .then(message => console.log(message))
+
+            setAnchorEl(null)
         }
     }
 
@@ -76,9 +77,10 @@ export default function Project({ id, title }: project) {
 
                 <Stack sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
                     <TextField
-                    inputRef={Descref} />
+                        inputRef={Descref} />
                     <Button
-                    onClick={sendBid}>Send</Button>
+
+                        onClick={sendBid}>Send</Button>
                 </Stack>
             </Popover>
         </Stack>
