@@ -9,9 +9,9 @@ export default async function createHandler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    console.log(req.method);
+    // console.log(req.method);
     if (req.method == 'POST') {
-        console.log(req.body)
+        // console.log(req.body)
         const prisma = new PrismaClient();
         const pro = await prisma.project.create(
             {

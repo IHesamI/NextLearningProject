@@ -6,7 +6,6 @@ import { Projectinf} from './index';
 
 
 export default function Projectlist({ data }: {  data: Projectinf[] }) {
-    console.log(data)
     return (
         <Stack>
             {

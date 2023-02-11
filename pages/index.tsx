@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+// import styles from '@/styles/Home.module.css'
 import { Box, Stack } from '@mui/material';
 import Projectlist from './projectlists';
 import { PrismaClient } from '.prisma/client';
-import { json } from 'stream/consumers';
+// import { json } from 'stream/consumers';
 
 const inter = Inter({ subsets: ['latin'] })
 

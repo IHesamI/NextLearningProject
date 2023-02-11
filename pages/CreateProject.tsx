@@ -6,7 +6,7 @@ export default function CreateProject() {
     const [id, setId] = useState('');
 
     const handleclick = () => {
-        console.log('zarp')
+        // console.log('zarp')
         if (title.current != null) {
             const title_value = title.current.value
             const fetcher = async () => {
@@ -14,7 +14,6 @@ export default function CreateProject() {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
-
                     },
                     body: JSON.stringify({
                         id: id,

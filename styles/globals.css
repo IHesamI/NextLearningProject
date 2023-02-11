@@ -1,0 +1,7 @@
+.loginBase{
+display: flex;
+justify-content: center;
+}
+.loginStack{
+    width: max-content;
+}

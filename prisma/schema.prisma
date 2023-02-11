@@ -36,6 +36,7 @@ model project {
 
 model propose {
   id           Int        @id @default(autoincrement())
+  title String 
   freelancer   freelancer @relation(fields: [freelancerid], references: [id])
   freelancerid Int
   project      project    @relation(fields: [projecid], references: [id])
