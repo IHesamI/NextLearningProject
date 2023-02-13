@@ -29,6 +29,10 @@ export async function getServerSideProps() {
   const prisma = new PrismaClient();
   const projects = await prisma.project.findMany(
     {
+      where: {
+        choosenproposeid: null
+      },
+
       include: {
         propose: false
       }

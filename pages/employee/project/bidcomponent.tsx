@@ -1,14 +1,21 @@
 import { Stack, Typography, Button } from "@mui/material";
-export default function BidCompo({ id, title, username }: { id: number, title: string, username: string }) {
+import { handleacceptfunc } from './[projectid]';
+export default function BidCompo({ id, title, username, freelancerid, handelaccept }: { id: number, title: string, username: string, freelancerid: number, handelaccept?: handleacceptfunc, }) {
     return (
         <Stack direction={'row'} style={{ justifyContent: 'space-evenly' }}>
             <Typography>{username}</Typography>
-            {/* <Typography>{id}</Typography> */}
+            <Typography>{freelancerid}</Typography>
             <Typography>{title}</Typography>
-            <Button color={'success'}
-                variant={'contained'}>
-                accept
-            </Button>
+            {
+                handelaccept ?
+                    <Button color={'success'}
+                        variant={'contained'}
+                        onClick={() => { handelaccept(id) }}>
+                        accept
+                    </Button>
+                    :
+                    <></>
+            }
 
         </Stack>
     )
