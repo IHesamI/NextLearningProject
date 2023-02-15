@@ -56,10 +56,11 @@ model propose {
 }
 
 model chatmessages {
-  id        Int      @id @default(autoincrement())
-  created   DateTime @default(now())
-  content   String
-  user      String   @db.VarChar(1)
-  project   project  @relation(fields: [projectid], references: [id])
-  projectid Int
+  id         Int      @id @default(autoincrement())
+  created    DateTime @default(now())
+  seenstatus Boolean  @default(false)
+  content    String
+  user       String   @db.VarChar(1)
+  project    project  @relation(fields: [projectid], references: [id])
+  projectid  Int
 }

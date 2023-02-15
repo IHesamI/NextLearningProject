@@ -6,6 +6,7 @@ import BidCompo from "./bidcomponent";
 export async function getServerSideProps(context: any) {
     const id = parseInt(context.params.projectid);
     const prisma = new PrismaClient();
+    let project;
     const project_status = await prisma.project.findFirst(
         {
             where: {
@@ -17,7 +18,7 @@ export async function getServerSideProps(context: any) {
         }
     )
     if (project_status?.choosenproposeid == null) {
-        const project = await prisma.project.findFirst(
+        project = await prisma.project.findFirst(
             {
                 where: {
                     id: id
@@ -37,12 +38,10 @@ export async function getServerSideProps(context: any) {
                 },
             }
         );
-        return {
-            props: { ...project }
-        }
+
     }
     else {
-        const project = await prisma.project.findFirst(
+        project = await prisma.project.findFirst(
             {
                 where: {
                     id: id
@@ -71,9 +70,18 @@ export async function getServerSideProps(context: any) {
                 },
             }
         );
-        return {
-            props: { ...project }
+    }
+
+    await prisma.propose.updateMany({
+        where: {
+            projecid: id
+        },
+        data: {
+            seenstatus: true
         }
+    });
+    return {
+        props: { ...project }
     }
 }
 
@@ -103,7 +111,7 @@ export type handleacceptfunc = (proposeid: number) => void
 
 
 export default function Project({ id, title, propose, chats, choosenproposeid }: project) {
-    console.log(choosenproposeid)
+    // console.log(choosenproposeid)
 
     const handleaccept: handleacceptfunc = async (proposeid: number) => {
         // todo
@@ -133,7 +141,8 @@ export default function Project({ id, title, propose, chats, choosenproposeid }:
                 </Stack>
                 :
                 <>
-                    <BidCompo key={propose[0].id} id={propose[0].id} title={propose[0].title} username={propose[0].freelancer.username} freelancerid={propose[0].freelancerid}/>
+                    <BidCompo key={propose[0].id} id={propose[0].id} title={propose[0].title} username={propose[0].freelancer.username} freelancerid={propose[0].freelancerid} />
+
                 </>
             }
         </Stack>
