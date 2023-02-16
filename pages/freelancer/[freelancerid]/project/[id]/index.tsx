@@ -1,6 +1,9 @@
 import BidCompo from "@/pages/employee/project/bidcomponent";
+import Chatcompo from "@/utils/ChatComponents";
 import { Stack, Typography, Button } from "@mui/material";
 import { PrismaClient } from "@prisma/client";
+
+import { chatmessage } from "@/utils/interfaces";
 export async function getServerSideProps(context: any) {
     const projectid = parseInt(context.params.id);
     const freelancerid = parseInt(context.params.freelancerid);
@@ -26,7 +29,12 @@ export async function getServerSideProps(context: any) {
                     }
                 }
             },
-            chatmessages: true
+            chatmessages: {
+                select: {
+                    content: true,
+                    user: true,
+                }
+            }
         }
     })
 
@@ -41,10 +49,25 @@ interface props {
     id: number;
     title: string;
     propose: { title: string, freelancer: { username: string } }[];
-    chatmessages?: object[];
+    chatmessages?: chatmessage[];
 }
 
 export default function home({ freelancerid, id, title, propose, chatmessages }: props) {
+    const sendMessage = async (payam: string, user: string) => {
+        await fetch('/api/Addmessage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: payam,
+                projectid: id,
+                user: user
+            })
+        })
+
+    }
+
     return (
         <Stack>
             <Stack >
@@ -54,7 +77,8 @@ export default function home({ freelancerid, id, title, propose, chatmessages }:
                     <Typography>{id}</Typography>
                     <Typography>{title}</Typography>
                 </Stack>
-                    <BidCompo id={id} title={propose[0].title} username={propose[0].freelancer.username} freelancerid={freelancerid} />
+                <BidCompo id={id} title={propose[0].title} username={propose[0].freelancer.username} freelancerid={freelancerid} />
+                <Chatcompo chats={chatmessages} sendMessage={sendMessage} user={'f'} />
             </Stack>
         </Stack>
     )

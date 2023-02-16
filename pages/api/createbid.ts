@@ -7,17 +7,17 @@ export default async function handleCreateBid(
 ) {
     if (req.method == 'POST') {
         const prisma = new PrismaClient();
+        const { title, freelancerid, projecid } = req.body
         const pro = await prisma.propose.create(
             {
                 data: {
-                    title: req.body.title,
-                    freelancerid: req.body.freelancerid,
-                    projecid: req.body.projecid,
-
+                    title: title,
+                    freelancerid: freelancerid,
+                    projecid: projecid,
                 }
             }
         )
-        return res.status(200).json({'message':'Bid successfully applied'})
+        return res.status(200).json({ 'message': 'Bid successfully applied' })
     }
 
 }

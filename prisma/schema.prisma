@@ -17,14 +17,14 @@ model employee {
   name        String?
   projects    project[]
 }
-
+ 
 model freelancer {
   id          Int       @id @default(autoincrement())
   phonenumber String    @db.VarChar(9)
   username    String    @db.VarChar(20)
   name        String?
   proposes    propose[]
-  // project     project[]
+
 }
 
 // model accetptedbids {

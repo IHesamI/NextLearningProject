@@ -5,3 +5,14 @@ justify-content: center;
 .loginStack{
     width: max-content;
 }
+
+
+
+.messageinput{
+    justify-content: center;
+
+    position: fixed;
+    bottom: 0;
+    justify-self: center;
+    align-self: center;
+}

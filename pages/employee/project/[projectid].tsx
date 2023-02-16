@@ -2,6 +2,9 @@ import { Box, Stack, Button, Typography, Popover, TextField } from "@mui/materia
 // import { useRef, useState } from "react";
 import { PrismaClient } from "@prisma/client"
 import BidCompo from "./bidcomponent";
+import Chatcompo from "@/utils/ChatComponents";
+import { project } from "@/utils/interfaces";
+
 
 export async function getServerSideProps(context: any) {
     const id = parseInt(context.params.projectid);
@@ -65,7 +68,12 @@ export async function getServerSideProps(context: any) {
                     chatmessages: {
                         where: {
                             projectid: id
+                        },
+                        select: {
+                            content: true,
+                            user: true
                         }
+
                     }
                 },
             }
@@ -86,32 +94,27 @@ export async function getServerSideProps(context: any) {
 }
 
 
-export interface prop {
-    projectid: number,
-    id: number,
-    title: string,
-    freelancerid: number,
-    freelancer: { username: string },
-}
-
-export interface chatmessage {
-    content: string,
-
-}
-
-interface project {
-    id: number;
-    title: string;
-    propose: prop[];
-    chats?: chatmessage;
-    choosenproposeid?: number;
-};
-
 export type handleacceptfunc = (proposeid: number) => void
 
+export default function Project({ id, title, propose, chatmessages, choosenproposeid }: project) {
+    // export default function Project(project:any) {
+    console.log(chatmessages)
 
-export default function Project({ id, title, propose, chats, choosenproposeid }: project) {
-    // console.log(choosenproposeid)
+    const sendMessage = async (payam: string, user: string) => {
+        await fetch('/api/Addmessage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: payam,
+                projectid: id,
+                user: user
+            })
+        })
+
+    }
+
 
     const handleaccept: handleacceptfunc = async (proposeid: number) => {
         // todo
@@ -120,6 +123,7 @@ export default function Project({ id, title, propose, chats, choosenproposeid }:
             headers: {
                 'Content-Type': 'application/json'
             },
+
             body: JSON.stringify({
                 proposeid: proposeid,
                 projectid: id
@@ -127,6 +131,7 @@ export default function Project({ id, title, propose, chats, choosenproposeid }:
         }).then(response => response.json()).then(message => console.log(message))
 
     }
+
     return (
         <Stack >
             <title>{title}</title>
@@ -141,8 +146,16 @@ export default function Project({ id, title, propose, chats, choosenproposeid }:
                 </Stack>
                 :
                 <>
-                    <BidCompo key={propose[0].id} id={propose[0].id} title={propose[0].title} username={propose[0].freelancer.username} freelancerid={propose[0].freelancerid} />
+                    <BidCompo
 
+                        key={propose[0].id} id={propose[0].id} title={propose[0].title} username={propose[0].freelancer.username} freelancerid={propose[0].freelancerid} />
+                    <Chatcompo
+                        // chats={chats}
+                        sendMessage={sendMessage}
+                        chats={chatmessages}
+                        user={'e'}
+
+                    />
                 </>
             }
         </Stack>
