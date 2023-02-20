@@ -3,11 +3,10 @@ import { useReducer, useRef } from "react";
 import { chatmessage } from "./interfaces";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 
-const reducer = (state: chatmessage[], action: { type: string, message?: string, user: string }) => {
-
+const reducer = (state: chatmessage[], action: { type: string, message?: string, user: string , created:string }) => {
     switch (action.type) {
         case 'AddMessage':
-            return [...state, { content: action.message, user: action.user }]
+            return [...state, { content: action.message, user: action.user ,created:action.created}]
         default:
             break;
     }
@@ -22,11 +21,14 @@ export default function Chatcompo(
     const handleSend = () => {
         const payam = message_content.current?.value
         if (payam != '') {
+            const date=new Date().toString();
             // console.log(message_content.current?.value)
             dispatch({
                 type: 'AddMessage',
                 message: payam,
                 user: user,
+                // ,created:Date
+                created:date,
             });
 
             sendMessage(payam, user)
@@ -44,11 +46,16 @@ export default function Chatcompo(
                 {
                     messages?.map((message, index) => (
                         <Box
+                            className={'chatdiv'}
+                            // component={'div'}
+                            // style={{backgroundColo:'rgb(12,123,244)'}}
                             key={index}
                             justifyContent={'center'}
                             textAlign={message.user == user ? 'end' : 'start'}>
                             <Typography>{message.content}</Typography>
-                            {/* <Typography>{index}</Typography> */}
+                            <Typography
+                                fontSize={10}
+                            >{message.created}</Typography>
                         </Box>
                     ))
                 }

@@ -10,7 +10,7 @@ export interface prop {
 export interface chatmessage {
     content: string,
     user:string,
-
+    created:string,
 }
 
 export interface project {

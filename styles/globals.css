@@ -10,9 +10,16 @@ justify-content: center;
 
 .messageinput{
     justify-content: center;
-
     position: fixed;
-    bottom: 0;
+    bottom: 11px;
     justify-self: center;
     align-self: center;
+}
+.chatdiv{
+    padding-left:10px ;
+    padding-right:10px ;
+    border-radius: 10px;
+    /* width: max-content; */
+    background-color: rgb(78, 149, 255);
+    /* max-width: 250px; */
 }

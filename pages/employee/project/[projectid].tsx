@@ -71,7 +71,8 @@ export async function getServerSideProps(context: any) {
                         },
                         select: {
                             content: true,
-                            user: true
+                            user: true,
+                            created:true
                         }
 
                     }
@@ -89,7 +90,7 @@ export async function getServerSideProps(context: any) {
         }
     });
     return {
-        props: { ...project }
+        props: JSON.parse(JSON.stringify({ ...project }))
     }
 }
 

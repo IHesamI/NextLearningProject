@@ -33,14 +33,20 @@ export async function getServerSideProps(context: any) {
                 select: {
                     content: true,
                     user: true,
+                    created: true,
                 }
             }
         }
     })
 
+    // return {
+    //     props: { freelancerid: freelancerid, ...project_with_messages }
+    // };
+    
     return {
-        props: { freelancerid: freelancerid, ...project_with_messages, }
+        props: JSON.parse(JSON.stringify({ freelancerid: freelancerid, ...project_with_messages }))
     }
+
 }
 
 
@@ -53,6 +59,7 @@ interface props {
 }
 
 export default function home({ freelancerid, id, title, propose, chatmessages }: props) {
+    console.log(chatmessages)
     const sendMessage = async (payam: string, user: string) => {
         await fetch('/api/Addmessage', {
             method: 'POST',
