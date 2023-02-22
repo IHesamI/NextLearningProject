@@ -59,7 +59,7 @@ interface props {
 }
 
 export default function home({ freelancerid, id, title, propose, chatmessages }: props) {
-    console.log(chatmessages)
+    // console.log(chatmessages)
     const sendMessage = async (payam: string, user: string) => {
         await fetch('/api/Addmessage', {
             method: 'POST',

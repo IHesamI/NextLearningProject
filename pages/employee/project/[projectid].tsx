@@ -99,7 +99,7 @@ export type handleacceptfunc = (proposeid: number) => void
 
 export default function Project({ id, title, propose, chatmessages, choosenproposeid }: project) {
     // export default function Project(project:any) {
-    console.log(chatmessages)
+    // console.log(chatmessages)
 
     const sendMessage = async (payam: string, user: string) => {
         await fetch('/api/Addmessage', {
